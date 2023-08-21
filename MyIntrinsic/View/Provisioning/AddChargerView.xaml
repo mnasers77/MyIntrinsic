@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyIntrinsic.Provisioning.View.AddChargerView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:model="clr-namespace:MyIntrinsic.Model"
+             xmlns:viewmodel="clr-namespace:MyIntrinsic.ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             ios:Page.UseSafeArea="true">
+    <!--x:DataType="viewmodel:SetupChargerViewModel"-->
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="{Binding Title}" Style="{StaticResource TitleLabelStyle}" TextColor="White" HorizontalOptions="Center"/>
+        </Grid>
+    </Shell.TitleView>
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False"/>
+    </Shell.BackButtonBehavior>
+
+    <ContentPage.Resources>
+        <Style TargetType="Image">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup>
+                        <VisualState Name="Normal"/>
+                        <VisualState Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor" Value="White" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="Auto, *">
+        <!--<BoxView Grid.Row="0" BackgroundColor="{StaticResource Primary}" 
+                         HeightRequest="160"
+                         HorizontalOptions="FillAndExpand"/>-->
+        <HorizontalStackLayout Grid.Row="0" Padding="10">
+            <Label Text="Welcome:  " FontAttributes="Bold" Style="{StaticResource LargeLabel}" TextColor="{StaticResource intrinsic-gray}"/>
+            <Label x:Name="fullNameLabel" Text="" FontAttributes="Bold" Style="{StaticResource LargeLabel}" TextColor="{StaticResource Primary}"/>
+        </HorizontalStackLayout>
+        <VerticalStackLayout Grid.Row="1" VerticalOptions="Center">
+            <Label Text="Add New Charger" FontAttributes="Bold" Style="{StaticResource LargeLabel}" TextColor="{StaticResource Primary}" HorizontalOptions="Center" Padding="10"/>
+            <Frame HeightRequest="160" WidthRequest="160" CornerRadius="80" HorizontalOptions="Center" Padding="0" IsClippedToBounds="False" BackgroundColor="{StaticResource Primary}" BorderColor="Transparent">
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding SelectChargerCommand}"/>
+            </Frame.GestureRecognizers>
+            <Image Aspect="Center">
+                <Image.Source>
+                        <FontImageSource Glyph="{StaticResource Plus}"
+                                                         FontFamily="FAS" Size="80"/>
+                </Image.Source>
+            </Image>
+        </Frame>
+        </VerticalStackLayout>
+     </Grid>
+
+</ContentPage>

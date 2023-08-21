@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyIntrinsic.View.LoginPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vms="clr-namespace:MyIntrinsic.ViewModel"
+             x:DataType="vms:LoginViewModel"
+             Shell.FlyoutBehavior="Disabled">
+        
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="{StaticResource intrinsic-lt-gray}">
+            <VerticalStackLayout Spacing="0">
+                <Grid>
+                    <BoxView BackgroundColor="{StaticResource intrinsic-blue1}" 
+                         HeightRequest="160"
+                         HorizontalOptions="FillAndExpand"/>
+                    <Image BackgroundColor="Transparent"
+                           Source="intrinsic_banner.png"
+                           Aspect="AspectFit"
+                           HeightRequest="100"
+                           WidthRequest="250"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"/>
+                </Grid>
+
+                <Border BackgroundColor="White" StrokeShape="RoundRectangle 20,20,20,20" Margin="{OnPlatform '20,30,20,20', WinUI='200,40,200,20'}" Padding="10,20,10,20">
+                    <VerticalStackLayout Spacing="20">
+                        <Entry x:Name="UsernameEntry"
+                               HeightRequest="45"
+                               HorizontalOptions="Fill"
+                               TextChanged="Entry_TextChanged"
+                               Keyboard="Text"
+                               Placeholder="Email"
+                               Text="{Binding Username, Mode=TwoWay}">
+                            <Entry.Behaviors>
+                                <toolkit:TextValidationBehavior
+                                x:Name="usernameValidator"
+                                Flags="ValidateOnAttaching, ValidateOnValueChanged"
+                                MinimumLength="6"/>
+                            </Entry.Behaviors>
+                        </Entry>
+
+                        <Entry x:Name="PasswordEntry"
+                               HeightRequest="45"
+                               HorizontalOptions="Fill"
+                               IsPassword="True"
+                               Placeholder="Password"
+                               Text="{Binding Password, Mode=TwoWay}"
+                               TextChanged="PasswordEntry_TextChanged">
+                            <Entry.Behaviors>
+                                <toolkit:TextValidationBehavior
+                                                x:Name="passwordValidator"
+                                                Flags="ValidateOnAttaching, ValidateOnValueChanged"
+                                                MinimumLength="6"/>
+                            </Entry.Behaviors>
+                        </Entry>
+
+
+                        <Button x:Name="loginButton"
+                                Command="{Binding LoginCommand}"
+                                Margin="0,10,0,0"
+                                CornerRadius="8"
+                                WidthRequest="{OnPlatform '200', WinUI='300'}"
+                                IsEnabled="{Binding IsLoginEnabled}"
+                                HorizontalOptions="{OnPlatform 'Center', WinUI='Fill'}"
+                                Text="Sign In"/>
+
+
+                        <!--  Forgot password link  -->
+                        <Button x:Name="ForgotPasswordLabel"
+                                Command="{Binding ForgotPasswordCommand}"
+                                Margin="0,15"
+                                HorizontalOptions="Center"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource intrinsic-gray2}"
+                                Text="Forgot Your Password?"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <VerticalStackLayout>
+                    <BoxView HeightRequest="1" Color="Black"/>
+                    <!--  Sign-up button  -->
+                    <Button Command="{Binding SignUpCommand}" 
+                            BackgroundColor="Transparent" 
+                            WidthRequest="{OnPlatform '200', WinUI='300'}"
+                            TextColor="{StaticResource intrinsic-gray2}"
+                            Margin="0,15" Text="Create an Account"/>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
+            <StackLayout>
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   HeightRequest="40"
+                                   WidthRequest="40"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="CenterAndExpand" />
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

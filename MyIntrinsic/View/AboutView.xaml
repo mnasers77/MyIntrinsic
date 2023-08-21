@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyIntrinsic.View.AboutView">
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="{Binding Title}" Style="{StaticResource TitleLabelStyle}" FontSize="30" TextColor="White"/>
+        </Grid>
+    </Shell.TitleView>
+    
+   <ContentPage.Resources>
+        <!--<ResourceDictionary>
+            <Style TargetType="Label" x:Key="TitleLabelStyle">
+                <Setter Property="FontFamily" Value="Poppins" />
+                <Setter Property="FontSize" Value="24" />
+                <Setter Property="TextColor" Value="Black" />
+            </Style>
+        </ResourceDictionary>-->
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <StackLayout BackgroundColor="{StaticResource intrinsic-blue2}" VerticalOptions="Fill" HorizontalOptions="Fill">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                <ContentView Padding="0,40,0,40" VerticalOptions="FillAndExpand">
+                    <Image Source="intrinsic_banner.png" VerticalOptions="Center" HeightRequest="90" />
+                </ContentView>
+            </StackLayout>
+        </StackLayout>
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="30,24,30,0" Spacing="15">
+                <Label Text="Intrinsic Power" FontSize="Title" Style="{StaticResource LargeLabel}"/>
+                <Label Text="Intrinsic Power develops and produces smart residential charging stations, enabling ubiquitous electric vehicle charging within the constraints of the power grid." Style="{StaticResource MediumLabel}"/>
+                <Label Padding="0,24,0,0" Style="{StaticResource MediumLabel}">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <FormattedString.Spans>
+                                <Span Text="Learn more at "/>
+                                <Span Text="https://www.intrinsicpower.com/" FontAttributes="Bold"/>
+                            </FormattedString.Spans>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Button Margin="{OnPlatform '0,10,0,0', WinUI='200,40,200,20'}" Text="Learn more"
+                        Command="{Binding OpenWebCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+            </VerticalStackLayout>
+        </ScrollView>
+        <VerticalStackLayout Grid.Row="2" Padding="30,24,30,24" Spacing="5">
+            <BoxView HeightRequest="1" Color="Black"/>
+            <Label Text="{Binding VersionInfo}" Style="{StaticResource MediumLabel}" />
+        </VerticalStackLayout>
+    </Grid>
+
+</ContentPage>

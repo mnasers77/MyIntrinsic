@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="MyIntrinsic.Provisioning.View.SelectChargerView"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             xmlns:model="clr-namespace:MyIntrinsic.Model"
+             xmlns:viewmodel="clr-namespace:MyIntrinsic.ViewModel"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             ios:Page.UseSafeArea="true">
+    <!--x:DataType="viewmodel:SetupChargerViewModel"-->
+    <Shell.TitleView>
+        <Grid>
+            <Label Text="{Binding Title}" Style="{StaticResource TitleLabelStyle}" TextColor="White" HorizontalOptions="Start"/>
+        </Grid>
+    </Shell.TitleView>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <toolkit:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem Text="Refresh"
+                     Command="{Binding RefreshWiFiNetworksCommand}" />
+    </ContentPage.ToolbarItems>-->
+
+    <Grid ColumnDefinitions="*,*"
+          ColumnSpacing="0"
+          RowDefinitions="Auto,*, Auto, Auto"
+          RowSpacing="5" Margin="10, 0, 10, 0">
+        <VerticalStackLayout Grid.Row="0" Grid.ColumnSpan="2">
+            <Label Text="Selected Charger:" Style="{StaticResource ExtraLargeLabel}"/>
+            <Label Text="{Binding SelectedNetwork}" Style="{StaticResource ExtraLargeLabel}"/>
+        </VerticalStackLayout>
+        <RefreshView x:Name="ssidRefreshView" Grid.Row="1" Grid.ColumnSpan="2"
+                     Command="{Binding RefreshWiFiNetworksCommand}"
+                     IsRefreshing="{Binding IsRefreshing}" IsEnabled="{OnPlatform 'true', WinUI='false'}">
+            <CollectionView ItemsSource="{Binding WiFiNetworks}" IsVisible="{Binding IsNotBusy}"
+                            SelectionMode="Single" SelectedItem="{Binding SelectedNetwork}" Margin="0, 15, 0, 0">
+            <CollectionView.Header>
+                <StackLayout Padding="5,0,0,5">
+                    <Label Style="{StaticResource LargeLabel}"
+                   Text="Detected Charger Networks"/>
+                </StackLayout>
+            </CollectionView.Header>
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                                     Span="{OnIdiom Desktop=1, Default=1}" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <StackLayout VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="Center"
+                                 WidthRequest="250"
+                                 HeightRequest="250">
+                    <Image Source="nodata.png"
+                               Aspect="AspectFill"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand" />
+                    <Label Text="No Charger Wi-Fi networks detected!" FontSize="14"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Border HeightRequest="100" Style="{StaticResource CardViewBorder}" Margin="5">
+                            <!--<Border.GestureRecognizers>
+                                <TapGestureRecognizer CommandParameter="{Binding .}"
+                                                      Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SelectChargerViewModel}}, Path=SelectWiFiNetworkCommand}"/>
+                            </Border.GestureRecognizers>-->
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="{OnPlatform '10', WinUI='10'}" />
+                            </Border.StrokeShape>
+                            <HorizontalStackLayout Spacing="2">
+                                <!--<VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="CommonStates">
+                                        <VisualState Name="Selected">
+                                            <VisualState.Setters>
+                                                <Setter Property="BackgroundColor" Value="Yellow"/>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>-->
+                                <Image BackgroundColor="#D1D1D1" Aspect="AspectFill" Source="charger.png" Margin="3"/>
+                                <Label Style="{StaticResource LargeLabel}" TextColor="Black"
+                                   Text="{Binding}" VerticalTextAlignment="Center">
+                                </Label>
+                            </HorizontalStackLayout>
+                        </Border>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        </RefreshView>
+        <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2" Spacing="10">
+            <Label Text="Select Charger to configure and select 'Continue' to proceed." Style="{StaticResource MediumLabel}"/>
+            <Label Text="If Charger is not listed, ensure it is fully powered and refresh the network list." Style="{StaticResource MediumLabel}"/>
+        </VerticalStackLayout>
+        <Button x:Name="connectButton"
+                Text="Start Configuration"
+                Command="{Binding DoConfigurationCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                Grid.Row="3"
+                Grid.Column="{OnPlatform '0', WinUI='1'}"
+                Grid.ColumnSpan="{OnPlatform '2', WinUI='1'}"
+                Margin="8" />
+        <Button x:Name="refreshButton"
+                Text="Refresh"
+                Command="{Binding UpdateWiFiNetworksCommand}"
+                IsEnabled="{Binding IsNotBusy}"
+                IsVisible="{OnPlatform 'false', WinUI='true'}"
+                Grid.Row="3"
+                Grid.Column="0"
+                Margin="8" />
+        <VerticalStackLayout Grid.RowSpan="4" Grid.ColumnSpan="2" IsVisible="{Binding IsBusy}" VerticalOptions="Center" HorizontalOptions="Center">
+        <ActivityIndicator IsVisible="{Binding IsBusy}"
+                           IsRunning="{Binding IsBusy}"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="CenterAndExpand"/>
+            <Label Text="{Binding ActivityText}" Style="{StaticResource LargeLabel}" HorizontalOptions="Center"/>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

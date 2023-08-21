@@ -1,0 +1,13 @@
+﻿global using Microsoft.Extensions.Logging;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using MyIntrinsic.Model;
+global using MyIntrinsic.View;
+global using MyIntrinsic.Provisioning.View;
+global using MyIntrinsic.ViewModel;
+global using MyIntrinsic.Services;
+global using System.Collections.ObjectModel;
+global using System.Diagnostics;
+global using System.Text.Json;
+global using System.Text;
+global using CommunityToolkit.Maui;
