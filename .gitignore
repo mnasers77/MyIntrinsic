@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/MyIntrinsic/obj
+/MyIntrinsic/bin
+.vs
+.vs/MyIntrinsic/DesignTimeBuild/.dtbcache.v2
+.vs/MyIntrinsic/FileContentIndex/7ea03b70-2a52-422c-b77b-5ed7ae6a3933.vsidx
+/MyIntrinsic/MyIntrinsic.csproj.user
+
